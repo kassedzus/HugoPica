@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Pangolin&display=swap");
+
+@tailwind base;
+
+@tailwind components;
+
+@font-face {
+    font-family: "Pangolin";
+    src: local("Pangolin"), url(/public/Pangolin-Regular.ttf) format("ttf");
+}
+
+@tailwind utilities;
