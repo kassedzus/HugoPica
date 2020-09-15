@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Pizza;
 use App\Ingredient;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Resources\Pizza as PizzaResource;
 // use App\Http\Resources\Ingredient as IngredientResource;
 
