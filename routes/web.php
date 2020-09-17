@@ -33,6 +33,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/json', function () {
-    return PizzaResource::collection(Pizza::all());
-});
+Route::get('/json', 'ApiController@listPizzas');
