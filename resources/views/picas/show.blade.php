@@ -10,7 +10,7 @@
 
 <div class="grid grid-cols-3 bg-gray-100 bg-opacity-50 rounded-lg p-6 shadow">
     <div class="col-span-1 p-2">
-        <img class="rounded-full border-8 border-white" src="https://loremflickr.com/300/300/pizza,food,delicious?lock={{ $pizza->id }}" alt="Picas bilde">
+        <img class="rounded-full border-8 border-white" src="https://loremflickr.com/300/300/pizza,pizzeria,delicious?lock={{ $pizza->id }}" alt="Picas bilde">
     </div>
     <div class="col-span-1 p-2 ml-2 ">
         <h1 class=" text-4xl">{{ $pizza->name }}</h1>
