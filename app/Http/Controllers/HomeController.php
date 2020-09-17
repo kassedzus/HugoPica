@@ -27,7 +27,7 @@ class HomeController extends Controller
     {
         if (Auth::check()) {
             $user = auth()->user();
-            $token = $user->createToken('token-name');
+            $token = $user->createToken('api_key');
             echo $token->plainTextToken;
         }
         return view('index');

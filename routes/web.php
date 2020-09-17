@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Pizza;
 use App\Ingredient;
 use Illuminate\Support\Facades\Auth;
@@ -33,4 +34,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/json', 'ApiController@listPizzas');
+// Route::get('/json', 'ApiController@listPizzas');
+// Route::post('/json', 'ApiController@createPizza');
+
+// Route::middleware('auth:sanctum')->get('/json', 'ApiController@listPizzas');
+// Route::middleware('auth:sanctum')->post('/json', 'ApiController@createPizzas');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/json', 'ApiController@listPizzas');
+    Route::post('/json', 'ApiController@createPizza');
+});
