@@ -27,5 +27,25 @@ class ApiController extends Controller
         $successMessage = ['message' => 'Pizza created successfully'];
 
         return json_encode($successMessage);
+
+        // $validated = $this->validatePizza();
+
+        // $newPizza = new Pizza($validated);
+        // $newPizza->save();
+
+        // $successMessage = ['message' => 'Pizza created successfully'];
+
+        // return json_encode($successMessage);
+    }
+
+    public function validatePizza()
+    {
+        return request()->validate([
+            'name' => 'required|unique:pizzas|between:4,30|ends_with:pica',
+            'name_url' => 'alpha_dash',
+            'category' => 'required|in:Cūkgaļas,Vistas,Liellopa,Bez gaļas,Veģetārā,Vegānā,Zivju|between:4,30',
+            'category_url' => 'alpha_dash',
+            'price' => 'required|between:3,5',
+        ]);
     }
 }

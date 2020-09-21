@@ -25,11 +25,11 @@ class StorePizza extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|unique|between:4,30|ends_with:pica',
-            'name_url' => 'alpha_dash|unique',
-            'category' => 'required|in:Cūkgaļas,Vistas,Liellopa,Bez gaļas,Veģetārā,Vegānā,Zivju|alpha|between:4,30',
-            'category_url' => 'alpha_dash|unique',
-            'price' => 'required|alpha_num|between:3,5',
+            'name' => 'required|unique:pizzas|between:4,30|ends_with:pica',
+            'name_url' => 'alpha_dash|unique:pizzas',
+            'category' => 'required|in:Cūkgaļas,Vistas,Liellopa,Bez gaļas,Veģetārā,Vegānā,Zivju|between:4,30',
+            'category_url' => 'alpha_dash',
+            'price' => 'required|between:3,5',
         ];
     }
 }
