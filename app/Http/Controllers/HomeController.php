@@ -23,13 +23,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        if (Auth::check()) {
-            $user = auth()->user();
-            $token = $user->createToken('api_key');
-            echo $token->plainTextToken;
-        }
-        return view('index');
-    }
+    // public function index()
+    // {
+    //     if (Auth::check()) {
+    //         $user = auth()->user();
+    //         $token = $user->createToken('api_key');
+    //         echo $token->plainTextToken;
+    //     }
+    //     return view('index');
+    // }
 }

@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
-    public function pizza() 
+    protected $guarded = [];
+
+    public function pizza()
     {
         return $this->belongsToMany(Pizza::class);
     }

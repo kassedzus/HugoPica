@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/json', 'ApiController@listPizzas');
+Route::middleware(['auth:sanctum'], ['except' => ['login']])->get('/pizza/list', 'ApiController@listPizzas');
+
+Route::middleware(['auth:sanctum'], ['except' => ['login']])->post('/pizza/create', 'ApiController@createPizza');

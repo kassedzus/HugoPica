@@ -40,7 +40,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::middleware('auth:sanctum')->get('/json', 'ApiController@listPizzas');
 // Route::middleware('auth:sanctum')->post('/json', 'ApiController@createPizzas');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/json', 'ApiController@listPizzas');
-    Route::post('/json', 'ApiController@createPizza');
-});
+// Route::middleware('auth:sanctum', ['except' => ['login']])->group(function () {
+//     Route::get('/json', 'ApiController@listPizzas');
+//     Route::post('/json', 'ApiController@createPizza');
+// });

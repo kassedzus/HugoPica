@@ -8,7 +8,8 @@
  */
 
 define('LARAVEL_START', microtime(true));
-
+// $_POST = json_decode(file_get_contents('php://input'), true);
+// die;
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -21,7 +22,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
