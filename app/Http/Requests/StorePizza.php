@@ -30,6 +30,7 @@ class StorePizza extends FormRequest
             'category' => 'required|in:Cūkgaļas,Vistas,Liellopa,Bez gaļas,Veģetārā,Vegānā,Zivju|between:4,30',
             'category_url' => 'alpha_dash',
             'price' => 'required|between:3,5',
+            'ingredients' => 'required'
         ];
     }
 }
