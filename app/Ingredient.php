@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
@@ -12,4 +13,9 @@ class Ingredient extends Model
     {
         return $this->belongsToMany(Pizza::class);
     }
+
+    // public function setNameUrlAttribute($value)
+    // {
+    //     return Str::snake(Str::ascii($value));
+    // }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\PizzasController;
 use App\Pizza;
 use App\Ingredient;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +24,16 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/picas', 'PizzasController@index');
-Route::get('/picas/{pica}', 'PizzasController@show')->name('showpizza');
-Route::get('/grozs', 'PizzasController@cart');
-Route::get('/pievienot-grozam/{id}', 'PizzasController@addToCart');
-Route::patch('/update-cart', 'ProductsController@update');
-Route::delete('/remove-from-cart', 'ProductsController@remove');
+Route::get('/picas', 'PizzasController@index')->name('pizza.index');
+Route::post('/picas', 'PizzasController@store')->name('pizza.store');
+Route::get('/picas/create', 'PizzasController@create')->name('pizza.create');
+Route::get('/picas/{pica}', 'PizzasController@show')->name('pizza.show');
+
+
+Route::get('/grozs', 'CartController@cart');
+Route::get('/pievienot-grozam/{id}', 'CartController@addToCart');
+Route::patch('/update-cart', 'CartController@update');
+Route::delete('/remove-from-cart', 'CartController@remove');
 
 Auth::routes();
 

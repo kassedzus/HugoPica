@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Pizza;
+use App\Category;
 use App\Ingredient;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePizza;
 use Illuminate\Support\Facades\Auth;
 
 class PizzasController extends Controller
@@ -19,7 +22,7 @@ class PizzasController extends Controller
             $pizzas = Pizza::all();
         }
 
-        return view('picas.picas', ['pizzas' => $pizzas]);
+        return view('picas.index', ['pizzas' => $pizzas]);
     }
 
     public function show($id)
@@ -29,89 +32,22 @@ class PizzasController extends Controller
         return view('picas.show', ['pizza' => $pizza]);
     }
 
-    public function cart()
+    public function create()
     {
-        return view('picas.cart');
+        return view('picas.create', ['categories' => Category::all(), 'ingredients' => Ingredient::all()]);
     }
 
-    public function addToCart($id)
+    public function store(StorePizza $request)
     {
-        $pizza = Pizza::find($id);
+        // dd(Str::snake(Str::ascii($request->name)));
+        $pizza = Pizza::create($request->except(['ingredients', 'category']), ['name_url' => Str::snake(Str::ascii($request->name))]);
+        $pizza->ingredients()->attach(request('ingredients'));
+        $pizza->category()->attach(request('category'));
+        // foreach ($request->ingredients as $ingredient) {
 
-        if (!$pizza) {
-
-            abort(404);
-        }
-
-        $cart = session()->get('cart');
-
-        // if cart is empty then this the first product
-        if (!$cart) {
-
-            $cart = [
-                $id => [
-                    "name" => $pizza->name,
-                    "quantity" => 1,
-                    "price" => $pizza->price,
-                    "avatar" => $pizza->avatar
-                ]
-            ];
-
-            session()->put('cart', $cart);
-
-            return redirect()->back()->with('success', 'Iepirkumu grozs papildināts veiksmīgi');
-        }
-
-        // if cart not empty then check if this product exist then increment quantity
-        if (isset($cart[$id])) {
-
-            $cart[$id]['quantity']++;
-
-            session()->put('cart', $cart);
-
-            return redirect()->back()->with('success', 'Iepirkumu grozs papildināts veiksmīgi');
-        }
-
-        // if item not exist in cart then add to cart with quantity = 1
-        $cart[$id] = [
-            "name" => $pizza->name,
-            "quantity" => 1,
-            "price" => $pizza->price,
-            "avatar" => $pizza->avatar
-        ];
-
-        session()->put('cart', $cart);
-
-        return redirect()->back()->with('success', 'Iepirkumu grozs papildināts veiksmīgi');
-    }
-
-    public function update(Request $request)
-    {
-        if ($request->id and $request->quantity) {
-            $cart = session()->get('cart');
-
-            $cart[$request->id]["quantity"] = $request->quantity;
-
-            session()->put('cart', $cart);
-
-            session()->flash('success', 'Cart updated successfully');
-        }
-    }
-
-    public function remove(Request $request)
-    {
-        if ($request->id) {
-
-            $cart = session()->get('cart');
-
-            if (isset($cart[$request->id])) {
-
-                unset($cart[$request->id]);
-
-                session()->put('cart', $cart);
-            }
-
-            session()->flash('success', 'Product removed successfully');
-        }
+        //     $pizza->ingredients()->attach();
+        // };
+        return redirect(route('pizza.index'));
+        // return response()->json('Pizza created successfully', 200);
     }
 }

@@ -26,9 +26,7 @@ class StorePizza extends FormRequest
     {
         return [
             'name' => 'required|unique:pizzas|between:4,30|ends_with:pica',
-            'name_url' => 'alpha_dash|unique:pizzas',
-            'category' => 'required|in:Cūkgaļas,Vistas,Liellopa,Bez gaļas,Veģetārā,Vegānā,Zivju|between:4,30',
-            'category_url' => 'alpha_dash',
+            'category' => 'required|exists:categories,id',
             'price' => 'required|between:3,5',
             'ingredients' => 'required'
         ];

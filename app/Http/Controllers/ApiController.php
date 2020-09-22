@@ -7,55 +7,26 @@ use App\Ingredient;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePizza;
-use GuzzleHttp\Psr7\Request as Psr7Request;
 use App\Http\Resources\Pizza as PizzaResource;
 
 class ApiController extends Controller
 {
-    public function listPizzas()
+    public function index()
     {
         return PizzaResource::collection(Pizza::all());
     }
 
-    public function createPizza(StorePizza $request)
+    public function store(StorePizza $request)
     {
+        // dd(request()->all());
+        $pizza = Pizza::create($request->except('ingredients'));
 
-        $validated = $request->validated();
+        foreach ($request->ingredients as $ingredient) {
 
-        // return json_encode($request->json());
-        $newPizza = new Pizza(request(['name', 'name_url', 'category', 'category_url', 'price']));
-        $newPizza->save();
-
-        $ingredients = json_decode($request->get('ingredients'));
-        foreach ($ingredients as $ingredient) {
-            $nameUrl = Str::snake(Str::ascii($ingredient));
-            $newIngredient = Ingredient::firstOrCreate(['name' => $ingredient, 'name_url' => $nameUrl]);
-            $newIngredient->save();
-            $newPizza->ingredients()->attach($newIngredient);
+            $newIngredient = Ingredient::firstOrCreate(['name' => $ingredient, 'name_url' => Str::snake(Str::ascii($ingredient))]);
+            $pizza->ingredients()->attach($newIngredient);
         };
 
-        $successMessage = ['message' => 'Pizza created successfully'];
-
-        return json_encode($successMessage);
-
-        // $validated = $this->validatePizza();
-
-        // $newPizza = new Pizza($validated);
-        // $newPizza->save();
-
-        // $successMessage = ['message' => 'Pizza created successfully'];
-
-        // return json_encode($successMessage);
+        return response()->json('Pizza created successfully', 200);
     }
-
-    // public function validatePizza()
-    // {
-    //     return request()->validate([
-    //         'name' => 'required|unique:pizzas|between:4,30|ends_with:pica',
-    //         'name_url' => 'alpha_dash',
-    //         'category' => 'required|in:Cūkgaļas,Vistas,Liellopa,Bez gaļas,Veģetārā,Vegānā,Zivju|between:4,30',
-    //         'category_url' => 'alpha_dash',
-    //         'price' => 'required|between:3,5',
-    //     ]);
-    // }
 }

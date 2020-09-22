@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIngredientsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,22 @@ class CreateIngredientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ingredients', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('name_url');
-            $table->string('category');
             $table->timestamps();
         });
 
-        Schema::create('ingredient_pizza', function (Blueprint $table) {
+        Schema::create('category_pizza', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('pizza_id');
-            $table->unsignedBigInteger('ingredient_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
-            $table->unique(['pizza_id', 'ingredient_id']);
+            $table->unique(['pizza_id', 'category_id']);
 
             $table->foreign('pizza_id')->references('id')->on('pizzas')->onDelete('cascade');
-            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
         });
     }
 
@@ -41,6 +39,6 @@ class CreateIngredientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ingredients');
+        Schema::dropIfExists('categories');
     }
 }

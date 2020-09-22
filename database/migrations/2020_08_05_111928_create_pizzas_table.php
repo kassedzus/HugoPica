@@ -17,9 +17,7 @@ class CreatePizzasTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('name_url');
-            $table->string('category');
-            $table->string('category_url');
-            $table->string('avatar') -> nullable();
+            $table->string('avatar')->nullable();
             $table->string('price');
             $table->timestamps();
         });
