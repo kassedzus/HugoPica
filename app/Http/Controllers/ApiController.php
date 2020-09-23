@@ -18,15 +18,20 @@ class ApiController extends Controller
 
     public function store(StorePizza $request)
     {
-        // dd(request()->all());
-        $pizza = Pizza::create($request->except('ingredients'));
-
-        foreach ($request->ingredients as $ingredient) {
-
-            $newIngredient = Ingredient::firstOrCreate(['name' => $ingredient, 'name_url' => Str::snake(Str::ascii($ingredient))]);
-            $pizza->ingredients()->attach($newIngredient);
-        };
+        $pizza = Pizza::create([
+            'name' => request('name'),
+            'name_url' => Str::snake(Str::ascii(request('name'))),
+            'price' => request('price'),
+        ]);
+        $pizza->category()->associate(request('category_id'));
+        $pizza->ingredients()->attach(request('ingredients'));
+        $pizza->save();
 
         return response()->json('Pizza created successfully', 200);
+    }
+
+    public function show($id)
+    {
+        return new PizzaResource(Pizza::find($id));
     }
 }

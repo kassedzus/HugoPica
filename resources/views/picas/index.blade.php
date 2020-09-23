@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="px-4">
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
         @if (request('ingredient'))
             <h1 class="text-2xl">Visas picas ar sastāvdaļām: {{request('ingredient')}}</h1>
         @elseif (request('category'))
@@ -16,7 +21,7 @@
                     <img class="rounded-lg" src="https://loremflickr.com/200/200/pizza,food,delicious?lock={{ $pizza->id }}" alt="Pizza image">
                     <a class="hover:text-orange-400 hover:no-underline" href="{{ route('pizza.show', $pizza) }}"><span class="mt-6 text-2xl ">{{ $pizza->name}}</span></a>
                     <div class="flex justify-between">
-                        <a href="picas?category={{$pizza->category}}" class="block text-sm text-black font-openSans">{{ $pizza->category }}</a>
+                        <a href="picas?category={{$pizza->category->name}}" class="block text-sm text-black font-openSans">{{ $pizza->category->name }}</a>
                         <p>&euro; {{ $pizza->price }}</p>
                     </div>
                 </div>

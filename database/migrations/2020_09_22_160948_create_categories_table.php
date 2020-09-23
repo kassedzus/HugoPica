@@ -19,24 +19,8 @@ class CreateCategoriesTable extends Migration
             $table->string('name_url');
             $table->timestamps();
         });
-
-        Schema::create('category_pizza', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('pizza_id');
-            $table->unsignedBigInteger('category_id');
-            $table->timestamps();
-
-            $table->unique(['pizza_id', 'category_id']);
-
-            $table->foreign('pizza_id')->references('id')->on('pizzas')->onDelete('cascade');
-        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('categories');

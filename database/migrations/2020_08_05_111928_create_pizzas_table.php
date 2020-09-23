@@ -6,28 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePizzasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('pizzas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('name_url');
+            $table->bigInteger('category_id');
             $table->string('avatar')->nullable();
             $table->string('price');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('pizzas');

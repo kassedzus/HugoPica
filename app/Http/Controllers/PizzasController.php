@@ -17,7 +17,7 @@ class PizzasController extends Controller
         if (request('ingredient')) {
             $pizzas = Ingredient::where('name', request('ingredient'))->firstOrFail()->pizza;
         } else if (request('category')) {
-            $pizzas = Pizza::where('category', request('category'))->get();
+            $pizzas = Pizza::where('category_id', request('category'))->get();
         } else {
             $pizzas = Pizza::all();
         }
@@ -39,15 +39,15 @@ class PizzasController extends Controller
 
     public function store(StorePizza $request)
     {
-        // dd(Str::snake(Str::ascii($request->name)));
-        $pizza = Pizza::create($request->except(['ingredients', 'category']), ['name_url' => Str::snake(Str::ascii($request->name))]);
+        $pizza = Pizza::create([
+            'name' => request('name'),
+            'name_url' => Str::snake(Str::ascii(request('name'))),
+            'price' => request('price'),
+        ]);
+        $pizza->category()->associate(request('category_id'));
         $pizza->ingredients()->attach(request('ingredients'));
-        $pizza->category()->attach(request('category'));
-        // foreach ($request->ingredients as $ingredient) {
+        $pizza->save();
 
-        //     $pizza->ingredients()->attach();
-        // };
-        return redirect(route('pizza.index'));
-        // return response()->json('Pizza created successfully', 200);
+        return redirect()->route('pizza.index')->with('status', 'Pica veiksmīgi izveidota!');
     }
 }

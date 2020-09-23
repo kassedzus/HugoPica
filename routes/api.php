@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum'], ['except' => ['login']])->get('/pizza', 'ApiController@index');
-
 Route::middleware(['auth:sanctum'], ['except' => ['login']])->post('/pizza', 'ApiController@store');
+Route::middleware(['auth:sanctum'], ['except' => ['login']])->get('/pizza/{id}', 'ApiController@show');
